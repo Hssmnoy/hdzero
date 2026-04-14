@@ -50,6 +50,9 @@ function gitCommit(message) {
 
     execSync("git add .", { stdio: "inherit" });
     execSync(`git commit -m "${message}"`, { stdio: "inherit" });
+
+    // 🔥 แก้ตรงนี้
+    execSync("git pull --rebase --autostash", { stdio: "inherit" });
     execSync("git push", { stdio: "inherit" });
 
     console.log("✅ COMMIT DONE");
@@ -57,7 +60,6 @@ function gitCommit(message) {
     console.log("⚠️ NO CHANGES");
   }
 }
-
 // ======================
 async function getAnimeList(catId, page = 1) {
   const url = `${BASE}/cat/${catId}/&page=${page}`;
