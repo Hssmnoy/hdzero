@@ -19,7 +19,7 @@ const CATEGORY_NAMES = {
 };
 
 // ======================
-const MODE = "test"; // test | normal | update
+const MODE = "normal"; // test | normal | update
 const TEST_LIMIT = 2;
 const BATCH_SIZE = 30;
 const MAX_PAGES = 2;
@@ -180,8 +180,8 @@ function savePlaylist(catId, allData, prefix = "playlist") {
   const json = {
     name: `Anime-hdzero ${CATEGORY_NAMES[catId]}`,
     updated: new Date().toLocaleString("th-TH"),
-    image: "",
-    url: "",
+    image: "https://raw.githubusercontent.com/nongakka/logo/main/ChatGPT Image 14 เม.ย. 2569 09_46_35.png",
+    url: "url: `https://raw.githubusercontent.com/nongakka/hdzero/main/data/playlist_${catId}.json`,",
     groups: allData.map((anime) => ({
       name: anime.title,
       image: anime.image,
