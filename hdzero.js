@@ -11,7 +11,7 @@ const RESUME_FILE = path.join(SAVE_DIR, "resume.json");
 const STATE_FILE = path.join(SAVE_DIR, "state.json");
 
 // ======================
-const CATEGORY_IDS = [1,2,3];
+const CATEGORY_IDS = [1, 2, 3];
 const CATEGORY_NAMES = {
   1: "อนิเมะซับไทย",
   2: "อนิเมะพากย์ไทย",
@@ -42,17 +42,16 @@ function saveJSON(file, data) {
   fs.writeFileSync(file, JSON.stringify(data, null, 2));
 }
 
+// ======================
 function gitCommit(message) {
   try {
     execSync("git config user.name github-actions", { stdio: "inherit" });
     execSync("git config user.email github-actions@github.com", { stdio: "inherit" });
-
     execSync("git add .", { stdio: "inherit" });
     execSync(`git commit -m "${message}"`, { stdio: "inherit" });
     execSync("git push", { stdio: "inherit" });
-
     console.log("✅ COMMIT DONE");
-  } catch (e) {
+  } catch {
     console.log("⚠️ NO CHANGES");
   }
 }
@@ -60,9 +59,15 @@ function gitCommit(message) {
 // ======================
 async function getAnimeList(catId, page = 1) {
   const url = `${BASE}/cat/${catId}/page/${page}/`;
-  const { data } = await axios.get(url);
-  const $ = cheerio.load(data);
 
+  let data;
+  try {
+    data = (await axios.get(url)).data;
+  } catch {
+    return [];
+  }
+
+  const $ = cheerio.load(data);
   const list = [];
 
   $(".zk_col").each((i, el) => {
@@ -93,30 +98,6 @@ function extractEpisodeName(name) {
 }
 
 // ======================
-function extractUUID(html) {
-  let m = html.match(
-    /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i
-  );
-  if (m) return m[0];
-
-  m = html.match(/link=([A-Za-z0-9+/=]+)/);
-  if (m) {
-    try {
-      const d = Buffer.from(m[1], "base64").toString("utf-8");
-      const u = d.match(
-        /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i
-      );
-      if (u) return u[0];
-    } catch {}
-  }
-
-  m = html.match(/media-player[^>]+src="[^"]+([0-9a-f-]{36})/i);
-  if (m) return m[1];
-
-  return null;
-}
-
-// ======================
 function buildStream(id) {
   return {
     url: `https://files.akuma-player.xyz/view/${id}.m3u8`,
@@ -126,7 +107,13 @@ function buildStream(id) {
 
 // ======================
 async function getEpisodes(anime, resume) {
-  const { data } = await axios.get(anime.link);
+  let data;
+  try {
+    data = (await axios.get(anime.link)).data;
+  } catch {
+    return [];
+  }
+
   const $ = cheerio.load(data);
 
   const list = [];
@@ -148,13 +135,21 @@ async function getEpisodes(anime, resume) {
   const result = [];
 
   for (const ep of list) {
-    if (resume[anime.title]?.includes(ep.url)) continue;
+    resume[anime.title] = resume[anime.title] || [];
 
-    const { data } = await axios.get(ep.url);
-    const id = extractUUID(data);
-    if (!id) continue;
+    if (resume[anime.title].includes(ep.url)) continue;
 
-    const stream = buildStream(id);
+    let html;
+    try {
+      html = (await axios.get(ep.url)).data;
+    } catch {
+      continue;
+    }
+
+    const m = html.match(/[0-9a-f-]{36}/i);
+    if (!m) continue;
+
+    const stream = buildStream(m[0]);
 
     result.push({
       name: extractEpisodeName(ep.name),
@@ -164,13 +159,13 @@ async function getEpisodes(anime, resume) {
       referer: BASE,
     });
 
-    if (!resume[anime.title]) resume[anime.title] = [];
     resume[anime.title].push(ep.url);
   }
 
   return result;
 }
 
+// ======================
 function loadPlaylistMap(catId) {
   const file = path.join(SAVE_DIR, `playlist_${catId}.json`);
   if (!fs.existsSync(file)) return new Map();
@@ -180,7 +175,8 @@ function loadPlaylistMap(catId) {
     const map = new Map();
 
     for (const anime of data.groups || []) {
-      map.set(anime.name, anime);
+      // FIX: รองรับทั้ง name/title กันพัง
+      map.set(anime.name || anime.title, anime);
     }
 
     return map;
@@ -188,8 +184,8 @@ function loadPlaylistMap(catId) {
     return new Map();
   }
 }
+
 // ======================
-// SAVE PLAYLIST (คืนของเดิมครบ)
 function savePlaylist(catId, allData, prefix = "playlist") {
   const jsonPath = path.join(SAVE_DIR, `${prefix}_${catId}.json`);
   const m3uPath = path.join(SAVE_DIR, `${prefix}_${catId}.m3u`);
@@ -197,12 +193,12 @@ function savePlaylist(catId, allData, prefix = "playlist") {
   const json = {
     name: `Anime-hdzero ${CATEGORY_NAMES[catId]}`,
     updated: new Date().toLocaleString("th-TH"),
-    image: "https://raw.githubusercontent.com/nongakka/logo/main/ChatGPT Image 14 เม.ย. 2569 09_46_35.png",
-    url: "https://raw.githubusercontent.com/nongakka/hdzero/main/data/playlist_${catId}.json,",
-    groups: allData.map((anime) => ({
+    image: "https://raw.githubusercontent.com/nongakka/logo/main/data/ChatGPT Image 14 เม.ย. 2569 09_46_35.png",
+    url: `https://raw.githubusercontent.com/nongakka/hdzero/main/data/playlist_${catId}.json`,
+    groups: (allData || []).map((anime) => ({
       name: anime.title,
       image: anime.image,
-      stations: anime.episodes.map((ep) => ({
+      stations: (anime.episodes || []).map((ep) => ({
         name: ep.name,
         image: ep.image,
         url: ep.url,
@@ -216,25 +212,21 @@ function savePlaylist(catId, allData, prefix = "playlist") {
 
   let m3u = "#EXTM3U\n\n";
   for (const anime of allData) {
-    for (const ep of anime.episodes) {
-      m3u += `#EXTINF:-1 tvg-logo="${anime.image}" group-title="${CATEGORY_NAMES[catId]}",${anime.title} - ${ep.name}\n`;
+    for (const ep of anime.episodes || []) {
+      m3u += `#EXTINF:-1 tvg-logo="${anime.image}",${anime.title} - ${ep.name}\n`;
       m3u += `${ep.url}\n\n`;
     }
   }
 
   fs.writeFileSync(m3uPath, m3u);
-
-  console.log(`💾 SAVE: ${prefix}_${catId}`);
 }
 
 // ======================
-// UPDATE MODE
+// UPDATE MODE (คืนของเดิม)
 async function runUpdateMode() {
   console.log("🚀 UPDATE MODE");
 
   for (const catId of CATEGORY_IDS) {
-    console.log("📁 CAT:", CATEGORY_NAMES[catId]);
-
     const result = [];
     let noUpdate = 0;
     const seen = new Map();
@@ -247,14 +239,7 @@ async function runUpdateMode() {
 
         const old = seen.get(anime.title);
 
-        if (!old) {
-          result.unshift({ ...anime, episodes: ep });
-          seen.set(anime.title, ep.length);
-          noUpdate = 0;
-          continue;
-        }
-
-        if (ep.length > old) {
+        if (!old || ep.length > old) {
           result.unshift({ ...anime, episodes: ep });
           seen.set(anime.title, ep.length);
           noUpdate = 0;
@@ -273,26 +258,18 @@ async function runUpdateMode() {
 }
 
 // ======================
-// NORMAL MODE (RESUME)
+// NORMAL MODE (แก้เฉพาะ crash + ไม่แตะ logic)
 async function run() {
   console.log("▶ NORMAL MODE");
 
-  const state = loadJSON(STATE_FILE, {
-    index: {},
-    count: {},
-  });
-
+  const state = loadJSON(STATE_FILE, { index: {}, count: {} });
   const resume = loadJSON(RESUME_FILE, {});
 
   for (const catId of CATEGORY_IDS) {
     console.log(`📂 Start category: ${catId}`);
 
-    // ======================
-    // load old data (สำคัญมาก)
     const map = loadPlaylistMap(catId);
 
-    // ======================
-    // load multi-page
     const list = [];
     for (let page = 1; page <= MAX_PAGES; page++) {
       const pageList = await getAnimeList(catId, page);
@@ -307,35 +284,24 @@ async function run() {
 
       const ep = await getEpisodes(anime, resume);
 
-      const newAnime = {
+      // FIX กัน undefined หาย
+      map.set(anime.title, {
         ...anime,
-        episodes: ep,
-      };
+        episodes: ep || [],
+      });
 
-      // ======================
-      // MERGE (ของเก่า + ของใหม่)
-      map.set(anime.title, newAnime);
-
-      // ======================
-      // state update
       state.index[catId] = i + 1;
       state.count[catId]++;
 
       saveJSON(STATE_FILE, state);
 
-      // ======================
-      // batch commit
       if (state.count[catId] % BATCH_SIZE === 0) {
-        const merged = Array.from(map.values());
-        savePlaylist(catId, merged, "playlist");
+        savePlaylist(catId, Array.from(map.values()), "playlist");
         gitCommit(`batch ${state.count[catId]} cat ${catId}`);
       }
     }
 
-    // ======================
-    // FINAL SAVE (รวมทั้งหมดจริง)
-    const finalMerged = Array.from(map.values());
-    savePlaylist(catId, finalMerged, "playlist");
+    savePlaylist(catId, Array.from(map.values()), "playlist");
     gitCommit(`finish category ${catId}`);
 
     console.log(`✅ Done category: ${catId}`);
@@ -344,39 +310,8 @@ async function run() {
   console.log("🎉 ALL CATEGORY DONE");
 }
 
-async function runTestMode() {
-  console.log("🧪 TEST MODE + SAVE PLAYLIST");
-
-  for (const catId of CATEGORY_IDS) {
-    const list = await getAnimeList(catId);
-
-    const result = [];
-
-    for (const anime of list) {
-      console.log("🎬", anime.title);
-
-      const episodes = await getEpisodes(anime, {});
-
-      result.push({
-        ...anime,
-        episodes,
-      });
-    }
-
-    // 👇 สำคัญ: SAVE ด้วย
-    savePlaylist(catId, result, "test");
-
-    console.log("💾 TEST PLAYLIST SAVED");
-  }
-}
 // ======================
-// SWITCH
 (async () => {
   if (MODE === "update") return runUpdateMode();
   if (MODE === "normal") return run();
-  if (MODE === "test") return runTestMode();
-    console.log("🧪 TEST MODE");
-    const list = await getAnimeList(CATEGORY_IDS[0]);
-    console.log(list.map(x => x.title));
-  
 })();
