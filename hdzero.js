@@ -260,15 +260,22 @@ async function runUpdateMode() {
 async function run() {
   console.log("▶ NORMAL MODE");
 
-  const state = loadJSON(STATE_FILE, { index: 0, count: 0, done: {} });
+  const state = loadJSON(STATE_FILE, { index: {}, count: 0, done: {} });
   const resume = loadJSON(RESUME_FILE, {});
 
   for (const catId of CATEGORY_IDS) {
+    console.log(`📂 Start category: ${catId}`);
+
     const list = await getAnimeList(catId);
+
+    // 🔥 แยก index ต่อหมวด
+    if (!state.index[catId]) {
+      state.index[catId] = 0;
+    }
 
     const all = [];
 
-    for (let i = state.index; i < list.length; i++) {
+    for (let i = state.index[catId]; i < list.length; i++) {
       const anime = list[i];
 
       const ep = await getEpisodes(anime, resume);
@@ -276,8 +283,8 @@ async function run() {
       all.push({ ...anime, episodes: ep });
 
       // ======================
-      // UPDATE STATE
-      state.index = i + 1;
+      // UPDATE STATE (แยกตามหมวด)
+      state.index[catId] = i + 1;
       state.count = (state.count || 0) + 1;
       saveJSON(STATE_FILE, state);
 
@@ -290,15 +297,14 @@ async function run() {
     }
 
     // ======================
-    // END CATEGORY
-    state.done[catId] = true;
-    state.index = 0;
-    state.count = 0;
-    saveJSON(STATE_FILE, state);
-
+    // 🔥 SAVE ปิดท้ายหมวดให้ครบ
     savePlaylist(catId, all, "playlist");
-    gitCommit(`finish cat ${catId}`);
+    gitCommit(`finish category ${catId}`);
+
+    console.log(`✅ Done category: ${catId}`);
   }
+
+  console.log("🎉 ALL CATEGORY DONE");
 }
 
 async function runTestMode() {
