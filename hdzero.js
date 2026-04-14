@@ -266,7 +266,12 @@ async function run() {
   for (const catId of CATEGORY_IDS) {
     console.log(`📂 Start category: ${catId}`);
 
-    const list = await getAnimeList(catId);
+    const list = [];
+
+for (let page = 1; page <= MAX_PAGES; page++) {
+  const pageList = await getAnimeList(catId, page);
+  list.push(...pageList);
+}
 
     // 🔥 แยก index ต่อหมวด
     if (!state.index[catId]) {
