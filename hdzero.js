@@ -281,7 +281,7 @@ function savePlaylist(catId, allData, prefix = "playlist") {
   // 🔥 FINAL JSON
   const json = {
     name: `Anime-hdzero ${CATEGORY_NAMES[catId]}`,
-    updated: `อัพเดตล่าสุด ${new Date().toLocaleDateString("th-TH", {
+    author: `อัพเดตล่าสุด ${new Date().toLocaleDateString("th-TH", {
       day: "2-digit",
       month: "2-digit",
       year: "numeric"
