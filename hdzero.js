@@ -11,7 +11,7 @@ const RESUME_FILE = path.join(SAVE_DIR, "resume.json");
 const STATE_FILE = path.join(SAVE_DIR, "state.json");
 
 // ======================
-const CATEGORY_IDS = [2];
+const CATEGORY_IDS = [1,2,3];
 const CATEGORY_NAMES = {
   1: "อนิเมะซับไทย",
   2: "อนิเมะพากย์ไทย",
