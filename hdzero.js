@@ -12,7 +12,7 @@ const RESUME_FILE = path.join(SAVE_DIR, "resume.json");
 const STATE_FILE = path.join(SAVE_DIR, "state.json");
 
 // ======================
-const CATEGORY_IDS = [2];
+const CATEGORY_IDS = [1,2,3];
 const CATEGORY_NAMES = {
   1: "อนิเมะซับไทย",
   2: "อนิเมะพากย์ไทย",
@@ -65,7 +65,18 @@ async function getAnimeList(catId, page = 1) {
   console.log(`📥 Fetch list | cat=${catId} page=${page}`);
   console.log(`🌐 URL: ${url}`);
 
-  const { data } = await axios.get(url);
+  let data;
+
+try {
+  const res = await axios.get(url, {
+    timeout: 15000,
+    headers: { "User-Agent": "Mozilla/5.0" }
+  });
+  data = res.data;
+} catch (err) {
+  console.log(`❌ FAIL PAGE=${page}`);
+  return [];
+}
   const $ = cheerio.load(data);
 
   // ======================
@@ -165,9 +176,26 @@ async function getEpisodes(anime, resume) {
   const result = [];
 
   for (const ep of list) {
-    if (resume[anime.title]?.includes(ep.url)) continue;
+    const key = anime.link;
 
-    const { data } = await axios.get(ep.url);
+if (!resume[key]) resume[key] = [];
+if (resume[key].includes(ep.url)) continue;
+
+resume[key].push(ep.url);
+
+  let data;
+
+try {
+  const res = await axios.get(ep.url, {
+    timeout: 15000,
+    headers: { "User-Agent": "Mozilla/5.0" }
+  });
+  data = res.data;
+} catch (err) {
+  console.log(`❌ FAIL EP=${ep.url}`);
+  continue;
+}
+
     const id = extractUUID(data);
     if (!id) continue;
 
@@ -317,13 +345,14 @@ async function runUpdateMode() {
 }
       }
 
-      if (noUpdate >= STOP_NO_UPDATE) break;
+      if (noUpdate >= STOP_NO_UPDATE) {
+  break;
+}
     }
 
     savePlaylist(catId, result, "update");
   }
 }
-
 // ======================
 // NORMAL MODE (RESUME)
 async function run() {
@@ -410,14 +439,12 @@ async function runTestMode() {
         episodes,
       });
     }
-
     // 👇 สำคัญ: SAVE ด้วย
     savePlaylist(catId, result, "test");
 
     console.log("💾 TEST PLAYLIST SAVED");
   }
 }
-
 // ======================
 // SWITCH
 (async () => {
