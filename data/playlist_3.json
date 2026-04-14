@@ -1,164 +1,56 @@
 {
   "name": "Anime-hdzero เดอะมูฟวี่",
-  "updated": "14/4/2569 04:28:17",
-  "image": "https://raw.githubusercontent.com/nongakka/logo/main/ChatGPT Image 14 เม.ย. 2569 09_46_35.png",
-  "url": "https://raw.githubusercontent.com/nongakka/hdzero/main/data/playlist_${catId}.json,",
+  "updated": "14/4/2569 05:05:34",
+  "image": "https://raw.githubusercontent.com/nongakka/logo/main/data/ChatGPT Image 14 เม.ย. 2569 09_46_35.png",
+  "url": "https://raw.githubusercontent.com/nongakka/hdzero/main/data/playlist_3.json",
   "groups": [
     {
-      "name": "Detective Conan Episode ZERO (2026) ยอดนักสืบจิ๋วโคนัน คดีพิพิธภัณฑ์สัตว์น้ำของคุโด้ ชินอิจิ พากย์ไทย",
       "image": "https://img-cdn.shirokami.me/2026/03/08/Detective-Conan-Episode-Zero-2026-KV2-724x1024.jpg",
-      "stations": [
-        {
-          "name": "Detective Conan Episode ZERO (2026) ยอดนักสืบจิ๋วโคนัน คดีพิพิธภัณฑ์สัตว์น้ำของคุโด้ ชินอิจิ พากย์ไทย",
-          "image": "https://img-cdn.shirokami.me/2026/03/08/Detective-Conan-Episode-Zero-2026-KV2-724x1024.jpg",
-          "url": "https://files.akuma-player.xyz/view/bb07ceba-d36d-524e-a4eb-c9190b4b06cb.m3u8",
-          "backup": "https://akuma-player.xyz/play/bb07ceba-d36d-524e-a4eb-c9190b4b06cb",
-          "referer": "https://anime-hdzero.com"
-        }
-      ]
+      "stations": []
     },
     {
-      "name": "Mieruko-chan มิเอรุโกะจัง ใครว่าหนูเห็นผี ซับไทย",
       "image": "https://img-cdn.shirokami.me/2026/03/16/827946d8b51ae8b5c097b54c1db5c89e.webp",
-      "stations": [
-        {
-          "name": "Mieruko-chan มิเอรุโกะจัง ใครว่าหนูเห็นผี ซับไทย The Movie",
-          "image": "https://img-cdn.shirokami.me/2026/03/16/827946d8b51ae8b5c097b54c1db5c89e.webp",
-          "url": "https://files.akuma-player.xyz/view/a17f722e-90dd-5f5e-8ac7-f58cd32ba5c2.m3u8",
-          "backup": "https://akuma-player.xyz/play/a17f722e-90dd-5f5e-8ac7-f58cd32ba5c2",
-          "referer": "https://anime-hdzero.com"
-        }
-      ]
+      "stations": []
     },
     {
-      "name": "Mieruko-chan มิเอรุโกะจัง ใครว่าหนูเห็นผี พากย์ไทย",
       "image": "https://img-cdn.shirokami.me/2026/03/16/db403e99ae2b0fb937e04998967c61eb.webp",
-      "stations": [
-        {
-          "name": "Mieruko-chan มิเอรุโกะจัง ใครว่าหนูเห็นผี The Movie พากย์ไทย",
-          "image": "https://img-cdn.shirokami.me/2026/03/16/db403e99ae2b0fb937e04998967c61eb.webp",
-          "url": "https://files.akuma-player.xyz/view/406185ff-56c0-5ce8-821a-a9a0081d1073.m3u8",
-          "backup": "https://akuma-player.xyz/play/406185ff-56c0-5ce8-821a-a9a0081d1073",
-          "referer": "https://anime-hdzero.com"
-        }
-      ]
+      "stations": []
     },
     {
-      "name": "5 Centimeters Per Second ยามซากุระร่วงโรย THE MOVIE (พากย์ไทย)",
       "image": "https://img.shirokami.me/images/2026/02/27/978164729325387d929b4f3f8cce0.jpg",
-      "stations": [
-        {
-          "name": "5 centimeters per second ยามซากุระร่วงโรย THE MOVIE (พากย์ไทย)",
-          "image": "https://img.shirokami.me/images/2026/02/27/978164729325387d929b4f3f8cce0.jpg",
-          "url": "https://files.akuma-player.xyz/view/5a9939c5-1ac2-5642-80f8-396a838624e0.m3u8",
-          "backup": "https://akuma-player.xyz/play/5a9939c5-1ac2-5642-80f8-396a838624e0",
-          "referer": "https://anime-hdzero.com"
-        }
-      ]
+      "stations": []
     },
     {
-      "name": "The Garden of Sinners A Study in Murder ภาค คดีฆาตกรรมลำดับสุดท้าย พากย์ไทย",
       "image": "https://img-cdn.shirokami.me/2026/03/25/6c1daa6a5438b039162f0c6f247ab6fb.webp",
-      "stations": [
-        {
-          "name": "The Garden of Sinners A Study in Murder ภาค คดีฆาตกรรมลำดับสุดท้าย พากย์ไทย The Movie",
-          "image": "https://img-cdn.shirokami.me/2026/03/25/6c1daa6a5438b039162f0c6f247ab6fb.webp",
-          "url": "https://files.akuma-player.xyz/view/01261ef6-bea1-5fee-b4a7-a376a3624025.m3u8",
-          "backup": "https://akuma-player.xyz/play/01261ef6-bea1-5fee-b4a7-a376a3624025",
-          "referer": "https://anime-hdzero.com"
-        }
-      ]
+      "stations": []
     },
     {
-      "name": "The Garden Of Sinners The Hollow Shrine ภาค ศาลเจ้ากลวง พากย์ไทย",
       "image": "https://img-cdn.shirokami.me/2026/03/25/907ae6465a357a620cb74413ff5cda54.webp",
-      "stations": [
-        {
-          "name": "The Garden Of Sinners The Hollow Shrine ภาค ศาลเจ้ากลวง พากย์ไทย The Movie",
-          "image": "https://img-cdn.shirokami.me/2026/03/25/907ae6465a357a620cb74413ff5cda54.webp",
-          "url": "https://files.akuma-player.xyz/view/04e9cf81-cfe1-5a62-9e58-34deb3fb94af.m3u8",
-          "backup": "https://akuma-player.xyz/play/04e9cf81-cfe1-5a62-9e58-34deb3fb94af",
-          "referer": "https://anime-hdzero.com"
-        }
-      ]
+      "stations": []
     },
     {
-      "name": "Kamen Rider Gavv Guilty Parfait มาสค์ไรเดอร์ กาบุ พากย์ไทย",
       "image": "https://img-cdn.shirokami.me/2026/03/25/4944b92002b36f4c5b5a91597046d550.webp",
-      "stations": [
-        {
-          "name": "Kamen Rider Gavv Guilty Parfait มาสค์ไรเดอร์ กาบุ พากย์ไทย The Movie",
-          "image": "https://img-cdn.shirokami.me/2026/03/25/4944b92002b36f4c5b5a91597046d550.webp",
-          "url": "https://files.akuma-player.xyz/view/6c623b40-e85b-5253-9931-06cc0d67c691.m3u8",
-          "backup": "https://akuma-player.xyz/play/6c623b40-e85b-5253-9931-06cc0d67c691",
-          "referer": "https://anime-hdzero.com"
-        }
-      ]
+      "stations": []
     },
     {
-      "name": "Garo Taiga กำเนิดอัศวินหมาป่าทองคำ ซับไทย",
       "image": "https://img-cdn.shirokami.me/2026/03/26/242a0a249b6f863446cbdf272e271af1.webp",
-      "stations": [
-        {
-          "name": "Garo Taiga กำเนิดอัศวินหมาป่าทองคำ ซับไทย The Movie",
-          "image": "https://img-cdn.shirokami.me/2026/03/26/242a0a249b6f863446cbdf272e271af1.webp",
-          "url": "https://files.akuma-player.xyz/view/15db3e2b-505a-577c-a640-f73ce84e7d70.m3u8",
-          "backup": "https://akuma-player.xyz/play/15db3e2b-505a-577c-a640-f73ce84e7d70",
-          "referer": "https://anime-hdzero.com"
-        }
-      ]
+      "stations": []
     },
     {
-      "name": "Garo Taiga กำเนิดอัศวินหมาป่าทองคำ พากย์ไทย",
       "image": "https://img-cdn.shirokami.me/2026/03/26/1710a04909a7a2cac07ddfddf103d957.webp",
-      "stations": [
-        {
-          "name": "Garo Taiga กำเนิดอัศวินหมาป่าทองคำ พากย์ไทย The Movie",
-          "image": "https://img-cdn.shirokami.me/2026/03/26/1710a04909a7a2cac07ddfddf103d957.webp",
-          "url": "https://files.akuma-player.xyz/view/df9df0cc-06b0-5a5c-90a3-f0230756edf8.m3u8",
-          "backup": "https://akuma-player.xyz/play/df9df0cc-06b0-5a5c-90a3-f0230756edf8",
-          "referer": "https://anime-hdzero.com"
-        }
-      ]
+      "stations": []
     },
     {
-      "name": "Love Live Nijigasaki Gakuen School Idol Doukoukai Kanketsu hen Part1 เลิฟไลฟ์ ชมรมสคูลไอดอลนิจิกะซากิ เดอะมูฟวี่ ปัจฉิมบท พาร์ท 1 ซับไทย",
       "image": "https://img-cdn.shirokami.me/2026/03/28/abd7229185fcac8333e039e5a7a72dd8.webp",
-      "stations": [
-        {
-          "name": "Love Live! Nijigasaki Gakuen School Idol Doukoukai Kanketsu-hen Part1 เลิฟไลฟ์ ชมรมสคูลไอดอลนิจิกะซากิ เดอะมูฟวี่ ปัจฉิมบท พาร์ท 1 ซับไทย เดอะมูฟวี่",
-          "image": "https://img-cdn.shirokami.me/2026/03/28/abd7229185fcac8333e039e5a7a72dd8.webp",
-          "url": "https://files.akuma-player.xyz/view/79d41c9f-89f3-55fd-a7f4-ee3bb50295f9.m3u8",
-          "backup": "https://akuma-player.xyz/play/79d41c9f-89f3-55fd-a7f4-ee3bb50295f9",
-          "referer": "https://anime-hdzero.com"
-        }
-      ]
+      "stations": []
     },
     {
-      "name": "Love Live Nijigasaki Gakuen School Idol Doukoukai Kanketsu hen Part 2 เลิฟไลฟ์ ชมรมสคูลไอดอลนิจิกะซากิ เดอะมูฟวี่ ปัจฉิมบท พาร์ท 2 ซับไทย",
       "image": "https://img-cdn.shirokami.me/2026/03/28/7a130b6afa9203c1857860f5ea09e5ef.jpg",
-      "stations": [
-        {
-          "name": "Love Live! Nijigasaki Gakuen School Idol Doukoukai Kanketsu-hen Part 2 เลิฟไลฟ์ ชมรมสคูลไอดอลนิจิกะซากิ เดอะมูฟวี่ ปัจฉิมบท พาร์ท 2 ซับไทย เดอะมูฟวี่",
-          "image": "https://img-cdn.shirokami.me/2026/03/28/7a130b6afa9203c1857860f5ea09e5ef.jpg",
-          "url": "https://files.akuma-player.xyz/view/6db840d2-68b6-5ce8-992a-dd457c14c478.m3u8",
-          "backup": "https://akuma-player.xyz/play/6db840d2-68b6-5ce8-992a-dd457c14c478",
-          "referer": "https://anime-hdzero.com"
-        }
-      ]
+      "stations": []
     },
     {
-      "name": "Kamen Rider Ryuki movie มาสค์ไรเดอร์ริวคิ การต่อสู้ครั้งสุดท้ายของริวคิ และเหล่าไรเดอร์ เสียงไทย เก่า",
       "image": "https://img-cdn.shirokami.me/2026/03/28/bec7d70de914cfdcdbf3053435979f86.webp",
-      "stations": [
-        {
-          "name": "Kamen Rider Ryuki movie มาสค์ไรเดอร์ริวคิ การต่อสู้ครั้งสุดท้ายของริวคิ และเหล่าไรเดอร์ เสียงไทย มูฟวี่ (เก่า)",
-          "image": "https://img-cdn.shirokami.me/2026/03/28/bec7d70de914cfdcdbf3053435979f86.webp",
-          "url": "https://files.akuma-player.xyz/view/32d9b4f2-7c8a-550f-a823-28199c5eda0a.m3u8",
-          "backup": "https://akuma-player.xyz/play/32d9b4f2-7c8a-550f-a823-28199c5eda0a",
-          "referer": "https://anime-hdzero.com"
-        }
-      ]
+      "stations": []
     }
   ]
 }
