@@ -281,7 +281,11 @@ function savePlaylist(catId, allData, prefix = "playlist") {
   // 🔥 FINAL JSON
   const json = {
     name: `Anime-hdzero ${CATEGORY_NAMES[catId]}`,
-    updated: new Date().toLocaleString("th-TH"),
+    updated: `อัพเดตล่าสุด ${new Date().toLocaleDateString("th-TH", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric"
+    }).replace(/(\d{4})$/, (y) => (parseInt(y) + 543).toString())}`,
     image: "https://raw.githubusercontent.com/nongakka/logo/main/ChatGPT Image 14 เม.ย. 2569 09_46_35.png",
     url: `https://raw.githubusercontent.com/nongakka/hdzero/main/data/playlist_${catId}.json`,
     groups: mergedGroups,
