@@ -330,13 +330,14 @@ function generateIndex() {
       return `อัพเดตล่าสุด ${d}/${m}/${y}`;
     })(),
     image: "https://raw.githubusercontent.com/nongakka/logo/main/ChatGPT Image 14 เม.ย. 2569 09_46_35.png",
-    url: "",
+    url: "https://raw.githubusercontent.com/nongakka/hdzero/main/data/index.json",
     groups: []
   };
 
   for (const catId of CATEGORY_IDS) {
     index.groups.push({
       name: CATEGORY_NAMES[catId],
+      image: "https://raw.githubusercontent.com/nongakka/logo/main/ChatGPT Image 14 เม.ย. 2569 09_46_35.png",
       url: `${baseRaw}playlist_${catId}.json`
     });
   }
