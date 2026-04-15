@@ -20,7 +20,7 @@ const CATEGORY_NAMES = {
 };
 
 // ======================
-const MODE = "normal"; // test | normal | update
+const MODE = "update"; // test | normal | update
 const TEST_LIMIT = 2;
 const BATCH_SIZE = 30;
 const MAX_PAGES = 260;
