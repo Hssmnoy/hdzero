@@ -1,9 +1,9 @@
 name: HDZero
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"  # ทุก 6 ชั่วโมง (ปรับได้)
+   - cron: "0 19 * * *"
+  workflow_dispatch:
 
 permissions:
   contents: write
