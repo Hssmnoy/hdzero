@@ -361,26 +361,29 @@ async function runUpdateMode() {
 
     const result = [];
     let noUpdate = 0;
-    const seen = new Map();
 
+    // ✅ โหลด playlist เก่ามาเทียบ
+    const oldData = loadJSON(path.join(SAVE_DIR, `playlist_${catId}.json`), {});
+    const oldMap = new Map();
+
+    if (oldData.groups) {
+      for (const g of oldData.groups) {
+        oldMap.set(g.name, g.stations.length);
+      }
+    }
+
+    // 🔥 เช็คแค่ 3 หน้า
     for (let page = 1; page <= 3; page++) {
       const list = await getAnimeList(catId, page);
 
       for (const anime of list) {
         const ep = await getEpisodes(anime, resume);
 
-        const old = seen.get(anime.title);
+        const old = oldMap.get(anime.title) || 0;
 
-        if (!old) {
+        // ✅ เงื่อนไขเดียวพอ
+        if (ep.length > old) {
           result.unshift({ ...anime, episodes: ep });
-          seen.set(anime.title, ep.length);
-          noUpdate = 0;
-          continue;
-        }
-
-        if (ep.length > 0 && ep.length !== old) {
-          result.unshift({ ...anime, episodes: ep });
-          seen.set(anime.title, ep.length);
           noUpdate = 0;
         } else {
           noUpdate++;
@@ -392,8 +395,9 @@ async function runUpdateMode() {
       if (noUpdate >= STOP_NO_UPDATE) break;
     }
 
+    // ✅ save
     saveJSON(RESUME_FILE, resume);
-    savePlaylist(catId, result, "update");
+    savePlaylist(catId, result, "playlist");
     generateIndex();
   }
 }
