@@ -314,10 +314,47 @@ function savePlaylist(catId, allData, prefix = "playlist") {
   console.log(`💾 SAVE: ${prefix}_${catId}`);
 }
 
+// =========================
+// สร้าง index.json
+// =========================
+function generateIndex() {
+  const baseRaw = "https://raw.githubusercontent.com/nongakka/hdzero/main/data/";
+
+  const index = {
+    name: "Anime-hdzero Playlist",
+    author: (() => {
+      const now = new Date();
+      const d = String(now.getDate()).padStart(2, "0");
+      const m = String(now.getMonth() + 1).padStart(2, "0");
+      const y = now.getFullYear() + 543;
+      return `อัพเดตล่าสุด ${d}/${m}/${y}`;
+    })(),
+    image: "https://raw.githubusercontent.com/nongakka/logo/main/ChatGPT Image 14 เม.ย. 2569 09_46_35.png",
+    url: "",
+    groups: []
+  };
+
+  for (const catId of CATEGORY_IDS) {
+    index.groups.push({
+      name: CATEGORY_NAMES[catId],
+      url: `${baseRaw}playlist_${catId}.json`
+    });
+  }
+
+  fs.writeFileSync(
+    path.join(SAVE_DIR, `index.json`),
+    JSON.stringify(index, null, 2)
+  );
+
+  console.log("📦 index.json created");
+}
+
 // ======================
 // UPDATE MODE
 async function runUpdateMode() {
   console.log("🚀 UPDATE MODE");
+
+  const resume = loadJSON(RESUME_FILE, {});
 
   for (const catId of CATEGORY_IDS) {
     console.log("📁 CAT:", CATEGORY_NAMES[catId]);
@@ -326,11 +363,11 @@ async function runUpdateMode() {
     let noUpdate = 0;
     const seen = new Map();
 
-    for (let page = 1; page <= MAX_PAGES; page++) {
+    for (let page = 1; page <= 3; page++) {
       const list = await getAnimeList(catId, page);
 
       for (const anime of list) {
-        const ep = await getEpisodes(anime, {});
+        const ep = await getEpisodes(anime, resume);
 
         const old = seen.get(anime.title);
 
@@ -341,7 +378,7 @@ async function runUpdateMode() {
           continue;
         }
 
-        if (ep.length > old) {
+        if (ep.length > 0 && ep.length !== old) {
           result.unshift({ ...anime, episodes: ep });
           seen.set(anime.title, ep.length);
           noUpdate = 0;
@@ -349,17 +386,15 @@ async function runUpdateMode() {
           noUpdate++;
         }
 
-        if (noUpdate >= STOP_NO_UPDATE) {
-  break;
-}
+        if (noUpdate >= STOP_NO_UPDATE) break;
       }
 
-      if (noUpdate >= STOP_NO_UPDATE) {
-  break;
-}
+      if (noUpdate >= STOP_NO_UPDATE) break;
     }
 
+    saveJSON(RESUME_FILE, resume);
     savePlaylist(catId, result, "update");
+    generateIndex();
   }
 }
 // ======================
@@ -422,6 +457,7 @@ async function run() {
 
     console.log(`💾 FINAL SAVE CATEGORY ${catId}`);
     savePlaylist(catId, all, "playlist");
+    generateIndex();
     gitCommit(`finish category ${catId}`);
 
     console.log(`✅ Done category: ${catId}`);
