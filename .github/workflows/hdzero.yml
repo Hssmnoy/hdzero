@@ -38,4 +38,6 @@ jobs:
 
           git commit -m "auto update playlist" || echo "no changes"
 
-          git push
+          git rebase --abort || true
+
+          git push origin HEAD:main
