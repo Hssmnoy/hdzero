@@ -2,18 +2,21 @@
   "name": "Anime-hdzero Playlist",
   "author": "อัพเดตล่าสุด 15/04/2569",
   "image": "https://raw.githubusercontent.com/nongakka/logo/main/ChatGPT Image 14 เม.ย. 2569 09_46_35.png",
-  "url": "",
+  "url": "https://raw.githubusercontent.com/nongakka/hdzero/main/data/index.json",
   "groups": [
     {
       "name": "อนิเมะซับไทย",
+      "image": "https://raw.githubusercontent.com/nongakka/logo/main/ChatGPT Image 14 เม.ย. 2569 09_46_35.png",
       "url": "https://raw.githubusercontent.com/nongakka/hdzero/main/data/playlist_1.json"
     },
     {
       "name": "อนิเมะพากย์ไทย",
+      "image": "https://raw.githubusercontent.com/nongakka/logo/main/ChatGPT Image 14 เม.ย. 2569 09_46_35.png",
       "url": "https://raw.githubusercontent.com/nongakka/hdzero/main/data/playlist_2.json"
     },
     {
       "name": "เดอะมูฟวี่",
+      "image": "https://raw.githubusercontent.com/nongakka/logo/main/ChatGPT Image 14 เม.ย. 2569 09_46_35.png",
       "url": "https://raw.githubusercontent.com/nongakka/hdzero/main/data/playlist_3.json"
     }
   ]
